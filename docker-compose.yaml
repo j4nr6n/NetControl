@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  app:
+    image: netcontrol-app:local-dev
+    ports:
+      - '9000:9000'
+
+  web:
+    image: netcontrol-web:local-dev
+    ports:
+      - '8080:80'
+    links:
+      - app

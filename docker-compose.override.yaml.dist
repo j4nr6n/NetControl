@@ -1,0 +1,11 @@
+version: "3.7"
+services:
+    app:
+        # image: netcontrol-app:local
+        volumes:
+            - .:/var/www
+
+    web:
+        # image: netcontrol-web:local
+        volumes:
+            - ./public:/var/www/public

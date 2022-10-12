@@ -1,0 +1,28 @@
+<table class="table">
+    <tbody>
+        <tr>
+            <th scope="row">Id</th>
+            <td>{{ user.id }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Name</th>
+            <td>{{ user.name }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Email</th>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Callsign</th>
+            <td>{{ user.callsign }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Homepage URL</th>
+            <td>{{ user.homepageUrl }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Created</th>
+            <td>{{ user.createdAt|date(constant('\DateTimeInterface::ATOM')) }}</td>
+        </tr>
+    </tbody>
+</table>

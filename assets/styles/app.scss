@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+@import '~bootstrap/scss/bootstrap';
+@import '~@fonts/titillium-web';
+@import '~@fonts/open-sans';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '~@fortawesome/fontawesome-free/scss/solid.scss';
+@import '~@fortawesome/fontawesome-free/scss/brands.scss';
+
+html {
+    position: relative;
+    min-height: 100%;
+
+    body {
+        font-family: 'Open Sans', 'sans-serif';
+
+        h1,h2,h3,h4,h5,h6 {
+            font-family: 'Titillium Web', 'sans-serif';
+        }
+
+        #impersonate-banner {
+            margin: 0;
+            border: none;
+            border-radius: 0;
+            font-size: 1rem;
+            line-height: 1rem;
+        }
+
+        a.navbar-brand {
+            font-family: 'Titillium Web', 'sans-serif';
+            font-weight: 300;
+            font-size: 1.6rem;
+        }
+
+        .nav-link > img {
+            height: 2rem;
+        }
+
+        margin-bottom: 4rem;
+        overflow-x: hidden;
+    }
+
+    &[data-turbo-preview] body {
+        opacity: .8;
+    }
+
+    > .turbo-progress-bar {
+        background-color: $warning;
+    }
+}

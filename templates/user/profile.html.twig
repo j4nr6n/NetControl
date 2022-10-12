@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <aside class="col-2">
+                <img src="{{ user.avatarUrl(300) }}"
+                     class="img-fluid rounded mb-3"
+                     alt="{{ user.callsign }}">
+
+                {% if user.homepageUrl %}
+                    <a href="{{ user.homepageUrl }}"
+                       class="text-decoration-none"
+                       rel="noopener"
+                       target="_blank">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                        Homepage
+                    </a>
+                {% endif %}
+            </aside>
+
+            <main class="col">
+                <div class="d-flex justify-content-between">
+                    <h1>{{ user.callsign }}</h1>
+                </div>
+            </main>
+        </div>
+    </div>
+{% endblock %}
