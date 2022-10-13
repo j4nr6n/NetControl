@@ -13,7 +13,6 @@ class DefaultController extends AbstractController
     public function homepage(): Response
     {
         if ($this->getUser()) {
-            // TODO: Move this to a separate controller method
             return $this->render('default/dashboard.html.twig');
         }
 
