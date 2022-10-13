@@ -19,22 +19,20 @@ class UserController extends AbstractController
     #[Route('/register', name: 'register', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function register(
         Request $request,
+        UserRepository $userRepository,
         MessageBusInterface $messageBus,
-        UserPasswordHasherInterface $userPasswordHasher,
-        UserRepository $userRepository
+        UserPasswordHasherInterface $passwordHasher
     ): Response {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    (string) $form->get('plainPassword')->getData()
-                )
-            );
+            /** @var string $plainPassword */
+            $plainPassword = $form->get('plainPassword')->getData();
+            $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
+
+            $user->setPassword($hashedPassword);
 
             $userRepository->add($user, true);
             $messageBus->dispatch(new EmailVerification((int) $user->getId()));

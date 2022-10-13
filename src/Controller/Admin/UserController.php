@@ -4,10 +4,12 @@ namespace App\Controller\Admin;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Message\EmailVerification;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -30,6 +32,7 @@ class UserController extends AbstractController
     public function new(
         Request $request,
         UserRepository $userRepository,
+        MessageBusInterface $messageBus,
         UserPasswordHasherInterface $passwordHasher
     ): Response {
         $user = new User();
@@ -44,6 +47,7 @@ class UserController extends AbstractController
             $user->setPassword($hashedPassword);
 
             $userRepository->add($user, true);
+            $messageBus->dispatch(new EmailVerification((int) $user->getId()));
 
             if ($request->query->get('ajax')) {
                 return new Response(null, Response::HTTP_NO_CONTENT);
