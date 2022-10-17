@@ -31,7 +31,7 @@ class UserControllerTest extends WebTestCase
 
         /** @var UserRepository $userRepository */
         $userRepository = static::getContainer()->get(UserRepository::class);
-        $userRepository->add($admin, true);
+        $userRepository->save($admin, true);
 
         $client->request(Request::METHOD_GET, '/admin/user');
         self::assertResponseRedirects('http://localhost/login');
@@ -51,7 +51,7 @@ class UserControllerTest extends WebTestCase
 
         /** @var UserRepository $userRepository */
         $userRepository = static::getContainer()->get(UserRepository::class);
-        $userRepository->add($admin, true);
+        $userRepository->save($admin, true);
 
         $client->request(Request::METHOD_GET, '/admin/user/new');
         self::assertResponseRedirects('http://localhost/login');
@@ -80,8 +80,8 @@ class UserControllerTest extends WebTestCase
 
         /** @var UserRepository $userRepository */
         $userRepository = static::getContainer()->get(UserRepository::class);
-        $userRepository->add($admin, true);
-        $userRepository->add($user, true);
+        $userRepository->save($admin, true);
+        $userRepository->save($user, true);
 
         $client->request(Request::METHOD_GET, sprintf('/admin/user/%d/edit', (int) $user->getId()));
         self::assertResponseRedirects('http://localhost/login');
@@ -110,8 +110,8 @@ class UserControllerTest extends WebTestCase
 
         /** @var UserRepository $userRepository */
         $userRepository = static::getContainer()->get(UserRepository::class);
-        $userRepository->add($admin, true);
-        $userRepository->add($user, true);
+        $userRepository->save($admin, true);
+        $userRepository->save($user, true);
 
         $client->request(Request::METHOD_GET, sprintf('/admin/user/%d', (int) $user->getId()));
         self::assertResponseRedirects('http://localhost/login');

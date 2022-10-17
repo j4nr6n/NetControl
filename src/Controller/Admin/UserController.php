@@ -46,7 +46,7 @@ class UserController extends AbstractController
 
             $user->setPassword($hashedPassword);
 
-            $userRepository->add($user, true);
+            $userRepository->save($user, true);
             $messageBus->dispatch(new EmailVerification((int) $user->getId()));
 
             if ($request->query->get('ajax')) {
@@ -97,7 +97,7 @@ class UserController extends AbstractController
                 $user->setPassword($hashedPassword);
             }
 
-            $userRepository->add($user, true);
+            $userRepository->save($user, true);
 
             if ($request->query->get('ajax')) {
                 return new Response(null, Response::HTTP_NO_CONTENT);

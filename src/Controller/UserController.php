@@ -34,7 +34,7 @@ class UserController extends AbstractController
 
             $user->setPassword($hashedPassword);
 
-            $userRepository->add($user, true);
+            $userRepository->save($user, true);
             $messageBus->dispatch(new EmailVerification((int) $user->getId()));
             $this->addFlash(
                 'success',
@@ -55,7 +55,7 @@ class UserController extends AbstractController
         $user
             ->setToken(null)
             ->setEmailVerified(true);
-        $userRepository->add($user, true);
+        $userRepository->save($user, true);
 
         $this->addFlash(
             'success',
@@ -95,7 +95,7 @@ class UserController extends AbstractController
                 $user->setPassword($hashedPassword);
             }
 
-            $userRepository->add($user, true);
+            $userRepository->save($user, true);
 
             return $this->redirectToRoute('user_settings_account', [], Response::HTTP_SEE_OTHER);
         }

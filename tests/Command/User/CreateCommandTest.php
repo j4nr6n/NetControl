@@ -50,7 +50,7 @@ class CreateCommandTest extends AbstractCommandTest
 
         /** @var UserRepository $userRepository */
         $userRepository = static::getContainer()->get(UserRepository::class);
-        $userRepository->add($user, true);
+        $userRepository->save($user, true);
 
         $commandTester = $this->executeCommand($this->userData);
 

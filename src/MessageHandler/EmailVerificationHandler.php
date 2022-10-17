@@ -37,7 +37,7 @@ class EmailVerificationHandler implements MessageHandlerInterface
         }
 
         $user->setToken($token);
-        $this->userRepository->add($user, true);
+        $this->userRepository->save($user, true);
 
         $email = (new TemplatedEmail())
             ->from(new Address('noreply@netcontrol.app', 'NetControl'))

@@ -53,7 +53,7 @@ class PromoteCommand extends Command
             $user->setRoles(['ROLE_SUPER_ADMIN']);
         }
 
-        $this->userRepository->add($user, true);
+        $this->userRepository->save($user, true);
 
         $io->success('Done!');
 

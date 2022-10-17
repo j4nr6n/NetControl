@@ -33,7 +33,7 @@ class DefaultControllerTest extends WebTestCase
 
         /** @var UserRepository $userRepository */
         $userRepository = static::getContainer()->get(UserRepository::class);
-        $userRepository->add($user, true);
+        $userRepository->save($user, true);
 
         $client->loginUser($user);
         $client->request(Request::METHOD_GET, '/');
