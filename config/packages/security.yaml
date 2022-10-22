@@ -25,6 +25,7 @@ security:
             login_throttling:
                 max_attempts: 5
             provider: app_user_provider
+            user_checker: App\Security\UserChecker
 
             remember_me:
                 secret: '%kernel.secret%' #required

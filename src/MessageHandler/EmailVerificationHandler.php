@@ -36,7 +36,9 @@ class EmailVerificationHandler implements MessageHandlerInterface
             throw new RecoverableMessageHandlingException('Not enough randomness.', 0, $exception);
         }
 
-        $user->setToken($token);
+        $user
+            ->setToken($token)
+            ->setEmailVerified(false);
         $this->userRepository->save($user, true);
 
         $email = (new TemplatedEmail())

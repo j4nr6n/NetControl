@@ -26,7 +26,9 @@ class SecurityControllerTest extends WebTestCase
         /** @var UserPasswordHasherInterface $passwordHasher */
         $passwordHasher = static::getContainer()->get(UserPasswordHasherInterface::class);
 
-        $user = (new User())->setEmail($this->userData['email']);
+        $user = (new User())
+            ->setEmail($this->userData['email'])
+            ->setEmailVerified(true);
         $user->setPassword($passwordHasher->hashPassword($user, $this->userData['password']));
 
         /** @var UserRepository $userRepository */
@@ -41,6 +43,43 @@ class SecurityControllerTest extends WebTestCase
             '_password' => $this->userData['password'],
         ]);
 
+        self::assertResponseRedirects('http://localhost/');
+    }
+
+    public function testEmailVerification(): void
+    {
+        $client = static::createClient();
+
+        /** @var UserPasswordHasherInterface $passwordHasher */
+        $passwordHasher = static::getContainer()->get(UserPasswordHasherInterface::class);
+
+        $user = (new User())->setEmail($this->userData['email']);
+        $user->setPassword($passwordHasher->hashPassword($user, $this->userData['password']));
+
+        /** @var UserRepository $userRepository */
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $userRepository->save($user, true);
+
+        $client->request(Request::METHOD_GET, '/login');
+        self::assertResponseIsSuccessful();
+
+        // Must verify email before logging in
+        $client->submitForm('Sign In', [
+            '_username' => $this->userData['email'],
+            '_password' => $this->userData['password'],
+        ]);
+        self::assertResponseRedirects('http://localhost/login');
+
+        /** @var User $user */
+        $user = $userRepository->find($user->getId());
+        $user->setEmailVerified(true);
+        $userRepository->save($user, true);
+
+        $client->request(Request::METHOD_GET, '/login');
+        $client->submitForm('Sign In', [
+            '_username' => $this->userData['email'],
+            '_password' => $this->userData['password'],
+        ]);
         self::assertResponseRedirects('http://localhost/');
     }
 
