@@ -6,13 +6,13 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Message\EmailVerification;
 use App\Repository\UserRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class UserController extends AbstractController
 {
@@ -44,7 +44,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('login');
         }
 
-        return $this->renderForm('security/register.html.twig', [
+        return $this->render('security/register.html.twig', [
             'form' => $form,
         ]);
     }
@@ -100,7 +100,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('user_settings_account', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('user/settings_account.html.twig', [
+        return $this->render('user/settings_account.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);

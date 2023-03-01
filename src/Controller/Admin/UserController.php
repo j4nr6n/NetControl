@@ -60,7 +60,7 @@ class UserController extends AbstractController
             ? 'user/_form.html.twig'
             : 'admin/user/new.html.twig';
 
-        return $this->renderForm($template, [
+        return $this->render($template, [
             'user' => $user,
             'form' => $form,
         ]);
@@ -112,7 +112,7 @@ class UserController extends AbstractController
             ? 'user/_form.html.twig'
             : 'admin/user/edit.html.twig';
 
-        return $this->renderForm($template, [
+        return $this->render($template, [
             'user' => $user,
             'form' => $form,
         ]);

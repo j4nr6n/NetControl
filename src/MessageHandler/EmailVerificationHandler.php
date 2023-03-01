@@ -6,12 +6,13 @@ use App\Message\EmailVerification;
 use App\Repository\UserRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\Exception\RecoverableMessageHandlingException;
 use Symfony\Component\Messenger\Exception\UnrecoverableMessageHandlingException;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Mime\Address;
 
-class EmailVerificationHandler implements MessageHandlerInterface
+#[AsMessageHandler]
+class EmailVerificationHandler
 {
     public function __construct(
         readonly private MailerInterface $mailer,
